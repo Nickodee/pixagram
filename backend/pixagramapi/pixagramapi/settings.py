@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentication',
     'rest_framework',
+    'djoser',
+    'rest_framework_simplejwt'
 ]
 
 MIDDLEWARE = [
@@ -53,6 +55,27 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'pixagramapi.urls'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+DJOSER = {
+    'LOGIN_FIELD':'email',
+    'PASSWORD_RESET_CONFIRM_URL': '/password/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': '/activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SEND_CONFIRMATION_EMAIL': True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    'SERIALIZERS': {},
+}
+
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
+}
+
 
 TEMPLATES = [
     {
@@ -78,8 +101,12 @@ WSGI_APPLICATION = 'pixagramapi.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'pixagram1',
+        'USER': 'postgres',
+        'PASSWORD': 'Nick@Postgres',
+        'HOST': 'localhost',
+        'PORT':'5432',
     }
 }
 
@@ -124,3 +151,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER ='apigram@gmail.com'
+EMAIL_HOST_PASSWORD = 'Pixagram@123'
+EMAIL_PORT = 587
+
